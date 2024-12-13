@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TEST</title>
+    </head>
+    <body>
+        <h1>Hello App</h1> 
+        <form>
+            <ul>
+                <li>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name">
+                </li>
+            </ul>
+        </form>
+        <script>
+           fetch("http://localhost:3000/")
+               .then(res => res.json())
+               .then(data => console.log(data))
+        </script>
+    </body>
+</html>
