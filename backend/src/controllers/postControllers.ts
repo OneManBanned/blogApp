@@ -1,26 +1,16 @@
 import {Request, Response} from "express"
 import prisma from "../../config/prismaClient.ts"
 
-const controller = {
+const post = {
     
-    getPosts: (req: Request, res: Response)  => {
-
-        res.json({posts: 'here are all the posts'})
+    post: (req: Request, res: Response)  => {
         return;
-    }
+    },
 
-    getPost: (req: Request, res: Response)  => {
-        return;
-    }
-
-    getComment: (req: Request, res: Response)  => {
-        return;
-    }
-
-    getComments: (req: Request, res: Response)  => {
+    comment: (req: Request, res: Response)  => {
         return;
     }
 
 }
 
-export default controller;
+export default post;
