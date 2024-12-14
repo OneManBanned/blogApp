@@ -7,18 +7,73 @@
     </head>
     <body>
         <h1>Hello App</h1> 
-        <form>
+        <form action="http://localhost:3000/post">
             <ul>
                 <li>
-                    <label for="name">Name</label>
+                    <label for="name">Name: </label>
                     <input type="text" name="name" id="name">
                 </li>
+                <li>
+                    <label for="email">Email: </label>
+                    <input type="email" name="email" id="email">
+                </li>
+                <li>
+                    <label for="password">Password: </label>
+                    <input type="password" name="password" id="password">
+                </li>
+                <li>
+                    <label for="confirmPassword">Confirm Password: </label>
+                    <input type="password" name="confirmPassword" id="confirmPassword">
+                </li>
             </ul>
+            <button type="submit">Submit</button>
         </form>
         <script>
-           fetch("http://localhost:3000/")
-               .then(res => res.json())
-               .then(data => console.log(data))
+           const form = document.querySelector("form")
+
+           form.addEventListener("submit", handleFormSubmit);
+
+           async function handleFormSubmit(event) {
+
+               event.preventDefault();
+
+               const form = event.currentTarget
+
+               const url = form.action;
+
+               try {
+                   const formData = new FormData(form)
+                   const responseData = await postFormDataAsJson({url, formData})
+
+                   console.log(responseData)
+               } catch(error) {
+                    console.error(error)
+               }
+           }
+
+           async function postFormDataAsJson({url, formData}) {
+
+               const plainFormData = Object.fromEntries(formData.entries());
+               const formDataJsonString = JSON.stringify(plainFormData);
+
+               const fetchOptions = {
+                   method: "POST",
+                   mode: "cors",
+                   headers: {
+                       "Content-Type": "application/json",
+                   },
+                   body: formDataJsonString,
+               };
+
+               const response = await fetch(url, fetchOptions);
+
+               if (!response.ok) {
+                   const errorMessage = await response.text();
+                   throw new Error(errorMessage)
+               };
+
+               return response.json();
+           }
         </script>
     </body>
 </html>
