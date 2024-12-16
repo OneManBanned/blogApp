@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+    <%- include("head.html") %>
+  <body>
+    <h1>Hello App</h1>
+    <form action="http://localhost:3000/register">
+      <ul>
+        <li>
+          <label for="name">Name: </label>
+          <input type="text" name="name" id="name" />
+          <span id="nameErr"></span>
+        </li>
+        <li>
+          <label for="email">Email: </label>
+          <input type="email" name="email" id="email" />
+          <span id="emailErr"></span>
+        </li>
+        <li>
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password" />
+          <span id="passwordErr"></span>
+        </li>
+        <li>
+          <label for="confirmPassword">Confirm Password: </label>
+          <input type="password" name="confirmPassword" id="confirmPassword" />
+          <span id="confirmPasswordErr"></span>
+        </li>
+      </ul>
+      <button type="submit">Submit</button>
+    </form>
+    <script src="userScript.js" defer></script>
+  </body>
+</html>

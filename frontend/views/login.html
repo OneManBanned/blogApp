@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <%- include("head.html") %>
+  <body>
+    <h1>login</h1>
+    <form action="http://localhost:3000/login">
+      <ul>
+        <li>
+          <label for="email">Email: </label>
+          <input type="email" name="email" id="email" />
+          <span id="emailErr"></span>
+        </li>
+        <li>
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password" />
+          <span id="passwordErr"></span>
+        </li>
+      </ul>
+      <button type="submit">Submit</button>
+    </form>
+    <script src="userScript.js" defer></script>
+  </body>
+</html>
