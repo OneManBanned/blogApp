@@ -13,10 +13,14 @@ async function handleFormSubmit(event) {
         const formData = new FormData(form);
         const responseData = await postFormDataAsJson({ url, formData });
 
-        responseData.success
-            ? (location.href = "http://localhost:5000/login")
-            : displayServerErrors(responseData, inputs);
-
+        if (responseData.success) {
+            if (responseData.token) {
+                localStorage.setItem("token", responseData.token)
+            }
+            location.href = `http://localhost:5000${form.attributes[1].value}`;
+        } else {
+            displayServerErrors(responseData, inputs);
+        }
     } catch (error) {
         console.error(error);
     }

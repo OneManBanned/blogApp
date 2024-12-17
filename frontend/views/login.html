@@ -3,17 +3,17 @@
   <%- include("head.html") %>
   <body>
     <h1>login</h1>
-    <form action="http://localhost:3000/login">
+    <form action="http://localhost:3000/login" data-redirect="/">
       <ul>
         <li>
           <label for="email">Email: </label>
           <input type="email" name="email" id="email" />
-          <span id="emailErr"></span>
+          <span id="message"></span>
         </li>
         <li>
           <label for="password">Password: </label>
           <input type="password" name="password" id="password" />
-          <span id="passwordErr"></span>
+          <span id="message"></span>
         </li>
       </ul>
       <button type="submit">Submit</button>
