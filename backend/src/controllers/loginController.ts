@@ -26,8 +26,10 @@ const login = {
             return res.send(err);
           }
 
-          const token = jwt.sign(user, process.env.SECRET as string);
-          return res.json({ user, token, success: true});
+          const token = jwt.sign(user, process.env.SECRET as string, {
+            expiresIn: '10h',
+          });
+          return res.json({ user, token, success: true });
         });
       },
     )(req, res);
