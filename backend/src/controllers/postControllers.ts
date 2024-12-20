@@ -18,7 +18,6 @@ const validatePost = [
     .isLength({ max: 256 })
     .withMessage("title is too long"),
   body("content").notEmpty().withMessage("required"),
-  body("publish").notEmpty().withMessage("required"),
 ];
 
 const post = {
