@@ -9,11 +9,7 @@ const customFields = {
     passwordField: "password",
 };
 
-const verifyCallback = async (
-    username: string,
-    password: string,
-    done: Function,
-) => {
+const verifyCallback = async ( username: string, password: string, done: Function,) => {
     try {
         const user = await prisma.user.findUniqueOrThrow({
             where: {

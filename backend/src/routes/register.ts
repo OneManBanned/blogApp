@@ -4,6 +4,6 @@ import { ValidationChain } from "express-validator";
 
 const router = Router();
 
-router.post("/", controller.user as ValidationChain[])
+router.post("/", ...controller.user)
 
 export default router;

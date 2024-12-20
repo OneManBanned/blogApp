@@ -26,7 +26,7 @@ const validateUserRegistration = [
 
 const register = {
     user: [
-        validateUserRegistration,
+        ...validateUserRegistration,
         asyncHandler(async function(req: Request, res: Response) {
             const valid = validationResult(req);
 
