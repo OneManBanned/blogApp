@@ -15,8 +15,9 @@ async function handleFormSubmit(event) {
         const formData = new FormData(form);
         const responseData = await postFormDataAsJson({ url, formData });
 
+        console.log(responseData)
         if (responseData.success) {
-            console.log("success postPostScript.js 28")
+            location.href = "http://localhost:9999/"
         } else {
             displayServerErrors(responseData, inputs);
         }
