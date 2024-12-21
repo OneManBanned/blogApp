@@ -1,7 +1,7 @@
 import login from "./loginRoute.js";
-import add from "./addRoute.js";
+import post from "./postRoute.js";
 
 export default {
     login,
-    add
+    post
 }

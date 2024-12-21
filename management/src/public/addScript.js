@@ -6,7 +6,6 @@ form.addEventListener("submit", handleFormSubmit);
 
 async function handleFormSubmit(event) {
     event.preventDefault();
-    console.log("SENDING")
 
     const form = event.currentTarget;
     const url = form.action;
@@ -15,7 +14,6 @@ async function handleFormSubmit(event) {
         const formData = new FormData(form);
         const responseData = await postFormDataAsJson({ url, formData });
 
-        console.log(responseData)
         if (responseData.success) {
             location.href = "http://localhost:9999/"
         } else {

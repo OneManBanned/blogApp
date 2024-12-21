@@ -1,19 +1,17 @@
 const container = document.querySelector("#container");
-console.log("Hello from inside");
 
 window.addEventListener("load", displayPosts);
 
 async function displayPosts() {
     if (token) {
-        const responseData = await fetchPosts(token);
-        console.log("HELLO: ", responseData);
+        const responseData = await fetchPosts(token, "http://localhost:3000/post");
         display(responseData);
     } else {
         location.href = "http://localhost:9999/login";
     }
 }
 
-async function fetchPosts(token) {
+async function fetchPosts(token, url) {
     const fetchOptions = {
         method: "GET",
         headers: {
@@ -22,7 +20,7 @@ async function fetchPosts(token) {
         },
     };
 
-    const response = await fetch("http://localhost:3000/post", fetchOptions);
+    const response = await fetch(url, fetchOptions);
 
     if (!response.ok) {
         const errorMessage = await response.text();
