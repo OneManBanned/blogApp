@@ -17,11 +17,13 @@ const get = {
     }),
 
     posts: asyncHandler(async (req: Request, res: Response) => {
-        const { id } = req.user as currentUser;
 
-        const posts = await prisma.post.findMany({
-            where: { authorId: id },
-        });
+        const { author } = req.user as currentUser;
+        let posts 
+
+        author 
+            ? posts = await prisma.post.findMany()
+            : posts = await prisma.post.findMany({where: { published: true }})
 
         res.json({ posts: posts });
         return;
