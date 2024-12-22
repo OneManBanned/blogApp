@@ -2,7 +2,7 @@ window.addEventListener("load", displayPosts);
 
 async function displayPosts() {
     if (token) {
-        const responseData = await fetchPosts(token, "http://localhost:3000/post/1");
+        const responseData = await fetchPosts(token, `http://localhost:3000${location.pathname}`);
         displayResponse(responseData)
     } else {
         location.href = "http://localhost:9999/login";
@@ -31,6 +31,7 @@ async function fetchPosts(token, url) {
 function displayResponse(data) {
     const { title, content, published } = data; 
 
+    document.querySelector("form").action =  `http://localhost:3000${location.pathname}`
     document.querySelector("#title").value = title;
     document.querySelector("#content").value = content;
     document.querySelector("#publish").checked = published;
