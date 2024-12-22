@@ -12,7 +12,7 @@ async function handleFormSubmit(event) {
 
     try {
         const formData = new FormData(form);
-        const responseData = await postFormDataAsJson({ url, formData });
+        const responseData = await sendFormDataAsJson({ url, formData });
 
         if (responseData.success) {
             location.href = "http://localhost:9999/"
@@ -24,31 +24,6 @@ async function handleFormSubmit(event) {
     }
 }
 
-async function postFormDataAsJson({ url, formData }) {
-    const plainFormData = Object.fromEntries(formData.entries());
-    const formDataJsonString = JSON.stringify(plainFormData);
-    const token = localStorage.getItem("token")
-
-    console.log("Token: ", token)
-
-    const fetchOptions = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: formDataJsonString,
-    };
-
-    const response = await fetch(url, fetchOptions);
-
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-    }
-
-    return response.json();
-}
 
 function displayServerErrors(errors, inputs) {
     for (let i = 0; i < inputs.length; i++) {
