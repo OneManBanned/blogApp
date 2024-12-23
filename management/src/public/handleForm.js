@@ -1,9 +1,6 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll("input");
 
-form.addEventListener("submit", handleFormSubmit);
-
-
 async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -11,11 +8,12 @@ async function handleFormSubmit(event) {
     const url = form.action;
 
     try {
+        console.log("Hello", url)
         const formData = new FormData(form);
         const responseData = await sendFormDataAsJson({ url, formData });
 
         if (responseData.success) {
-            location.href = "http://localhost:9999/"
+            location.href = "http://localhost:9999/";
         } else {
             displayServerErrors(responseData, inputs);
         }
@@ -23,7 +21,6 @@ async function handleFormSubmit(event) {
         console.error(error);
     }
 }
-
 
 function displayServerErrors(errors, inputs) {
     for (let i = 0; i < inputs.length; i++) {

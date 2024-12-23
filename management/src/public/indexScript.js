@@ -34,11 +34,25 @@ function display(data) {
     const { posts } = data;
 
     posts.forEach((post) => {
-        const listItem = document.createElement("li")
+        const listItem = document.createElement("li");
         const postLink = document.createElement("a");
+        const form = createDeleteForm(post.id);
         postLink.href = `http://localhost:9999/post/${post.id}`;
         postLink.innerHTML = post.title;
-        listItem.appendChild(postLink)
+        listItem.appendChild(postLink);
         container.appendChild(listItem);
+        container.appendChild(form)
     });
+
+}
+
+function createDeleteForm(id) {
+    const deleteForm = document.createElement("form");
+    deleteForm.addEventListener("submit", handleFormSubmit)
+    const deleteButton = document.createElement("button");
+    deleteForm.action = `http://localhost:3000/post/${id}`;
+    deleteButton.type = "submit";
+    deleteButton.innerHTML = "Delete";
+    deleteForm.appendChild(deleteButton);
+    return deleteForm
 }

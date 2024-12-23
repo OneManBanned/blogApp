@@ -1,7 +1,6 @@
 async function sendFormDataAsJson({ url, formData }) {
     const plainFormData = Object.fromEntries(formData.entries());
     const formDataJsonString = JSON.stringify(plainFormData);
-    const token = localStorage.getItem("token")
 
     const fetchOptions = {
         method: "PUT",

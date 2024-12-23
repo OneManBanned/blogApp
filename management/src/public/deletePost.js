@@ -1,16 +1,13 @@
-async function sendFormDataAsJson({ url, formData }) {
-    const plainFormData = Object.fromEntries(formData.entries());
-    const formDataJsonString = JSON.stringify(plainFormData);
-
+async function sendFormDataAsJson({url}) {
     const fetchOptions = {
-        method: "POST",
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`
         },
-        body: formDataJsonString,
     };
 
+    console.log(url, fetchOptions)
     const response = await fetch(url, fetchOptions);
 
     if (!response.ok) {

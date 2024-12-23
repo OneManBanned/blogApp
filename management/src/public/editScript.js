@@ -31,7 +31,7 @@ async function fetchPosts(token, url) {
 function displayResponse(data) {
     const { title, content, published } = data; 
 
-    document.querySelector("form").action =  `http://localhost:3000${location.pathname}`
+    document.querySelector("form").action = `http://localhost:3000${location.pathname}`
     document.querySelector("#title").value = title;
     document.querySelector("#content").value = content;
     document.querySelector("#publish").checked = published;

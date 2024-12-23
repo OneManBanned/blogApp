@@ -1,4 +1,5 @@
 async function fetchPosts(token, url) {
+
     const fetchOptions = {
         method: "GET",
         headers: {
