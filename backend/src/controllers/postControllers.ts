@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import { createErrorsMap } from "../../utils/createErrMap";
 import { body, validationResult } from "express-validator";
 import prisma from "../../config/prismaClient";
-import { currentUser } from "../../utils/adimAuth";
+import { currentUser } from "../../utils/adminAuth";
 
 interface PostInput {
   title: string;

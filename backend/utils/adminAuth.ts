@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { User } from "@prisma/client"
 
-type currentUser = User
+export type currentUser = User
 
 declare global {
     namespace Express {

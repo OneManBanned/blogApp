@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../config/prismaClient.ts";
-import { currentUser } from "../../utils/adimAuth.ts";
+import { currentUser } from "../../utils/adminAuth.ts";
 import asyncHandler from "express-async-handler";
 
 const get = {
