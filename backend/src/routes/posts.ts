@@ -8,8 +8,8 @@ router.get("/", controller.get.posts);
 router.post("/", isAdmin, ...controller.post.post);
 
 router.get("/:postId", controller.get.post);
-router.put("/:postId", controller.put.post);
-router.delete("/:postId", controller.del.post);
+router.put("/:postId", isAdmin, controller.put.post);
+router.delete("/:postId", isAdmin, controller.del.post);
 
 router.get("/:postId/comments", controller.get.comments);
 
