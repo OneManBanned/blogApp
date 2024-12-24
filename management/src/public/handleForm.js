@@ -1,6 +1,8 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll("input");
 
+form.addEventListener("submit", handleFormSubmit)
+
 async function handleFormSubmit(event) {
     event.preventDefault();
 
