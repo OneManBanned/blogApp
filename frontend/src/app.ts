@@ -20,6 +20,9 @@ app.get("/login", (req: Request, res: Response) => {
 app.get("/", (req: Request, res: Response) => {
     res.render('index.html');
 })
+app.get("/:postId", (req: Request, res: Response) => {
+    res.render('post.html');
+})
 
 
 app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`))

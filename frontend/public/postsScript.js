@@ -35,7 +35,7 @@ function display(data) {
         const listItem = document.createElement("li")
         const postLink = document.createElement("a");
 
-        postLink.href = `http://localhost:5000/post/${post.id}`;
+        postLink.href = `http://localhost:5000/${post.id}`;
         postLink.innerHTML = post.title;
 
         listItem.appendChild(postLink)

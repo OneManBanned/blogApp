@@ -13,8 +13,8 @@ router.delete("/:postId", isAdmin, controller.del.post);
 
 router.get("/:postId/comments", controller.get.comments);
 
-router.get("/:postId/comments/:commentId", controller.get.comment);
-router.put("/:postId/comments/:commentId", controller.put.comment);
-router.delete("/:postId/comments/:commentId", controller.del.comment);
+router.post("/:postId/comment", controller.post.comment);
+router.put("/:postId/comment/:commentId", controller.put.comment);
+router.delete("/:postId/comment/:commentId", controller.del.comment);
 
 export default router;

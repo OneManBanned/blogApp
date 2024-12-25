@@ -20,6 +20,8 @@ const validatePost = [
   body("content").notEmpty().withMessage("required"),
 ];
 
+const validateComment = [body("comment").notEmpty().withMessage("required")];
+
 const post = {
   post: [
     ...validatePost,
@@ -36,14 +38,34 @@ const post = {
         await prisma.post.create({
           data: { title, content, published, authorId },
         });
-        res.json({ success: true});
+        res.json({ success: true });
       }
     }),
   ],
 
-  comment: (req: Request, res: Response) => {
-    return;
-  },
+  comment: [
+    ...validateComment,
+    asyncHandler(async (req: Request, res: Response) => {
+
+      const valid = validationResult(req);
+
+      if (!valid.isEmpty()) {
+        const errors = createErrorsMap(valid.array({ onlyFirstError: true }));
+        res.json(errors);
+      } else {
+        const { comment } = req.body;
+        const { postId } = req.params;
+        const { id } = req.user as currentUser;
+        await prisma.comment.create({
+          data: {
+            postId: +postId,
+            authorId: id,
+            content: comment,
+          },
+        });
+      }
+    }),
+  ],
 };
 
 export default post;
