@@ -1,5 +1,7 @@
 const container = document.querySelector("#container");
-window.addEventListener("load", displayPost);
+window.addEventListener("load", () => {
+    displayPost(), displayComment();
+});
 
 async function displayPost() {
     if (token) {
@@ -34,6 +36,7 @@ async function fetchPosts(token, url) {
 
 function display(data) {
     const { id, title, content } = data;
+    const container = document.querySelector("#post")
 
     const h1 = document.createElement("h1");
     h1.innerHTML = title;
@@ -43,9 +46,9 @@ function display(data) {
 
     const comment = createCommentForm(id);
 
-    document.querySelector("body").appendChild(h1);
-    document.querySelector("body").appendChild(p);
-    document.querySelector("body").appendChild(comment);
+    container.appendChild(h1);
+    container.appendChild(p);
+    container.appendChild(comment);
 }
 
 function createCommentForm(id) {
@@ -56,8 +59,8 @@ function createCommentForm(id) {
     textArea.name = "comment";
     commentForm.appendChild(textArea);
 
-    const span = document.createElement("span")
-    commentForm.appendChild(span)
+    const span = document.createElement("span");
+    commentForm.appendChild(span);
 
     const commentButton = document.createElement("button");
     commentForm.action = `http://localhost:3000/post/${id}/comment`;
@@ -69,7 +72,7 @@ function createCommentForm(id) {
 
 async function handleFormSubmit(event) {
     event.preventDefault();
-    const inputs = document.querySelector("textarea")
+    const inputs = document.querySelector("textarea");
 
     const form = event.currentTarget;
     const url = form.action;
@@ -79,7 +82,7 @@ async function handleFormSubmit(event) {
         const responseData = await sendFormDataAsJson({ url, formData });
 
         if (responseData.success) {
-            location.href = "http://localhost:9999/";
+            location.href = `http://localhost:5000${location.pathname}`;
         } else {
             displayServerErrors(responseData, [inputs]);
         }
@@ -109,6 +112,58 @@ async function sendFormDataAsJson({ url, formData }) {
             Authorization: `Bearer ${token}`,
         },
         body: formDataJsonString,
+    };
+
+    const response = await fetch(url, fetchOptions);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    }
+
+    return response.json();
+}
+
+async function displayComment() {
+    if (token) {
+        const responseData = await fetchComment(
+            token,
+            `http://localhost:3000/post${location.pathname}/comments`,
+        );
+        displayComments(responseData);
+    } else {
+        location.href = `http://localhost:5000${location.pathname}`;
+    }
+}
+
+function displayComments(data) {
+    const { ...comments } = data
+    const container = document.querySelector("#comments")
+
+    for (let i in comments) {
+        console.log(comments[i])
+        const commentDiv = document.createElement("div")
+        const p = document.createElement("p")
+        p.innerHTML = comments[i].content
+        commentDiv.appendChild(p)
+
+        const a = document.createElement("a")
+        a.href = `http://localhost:5000/comment/${comments[i].id}`
+        a.innerHTML = "Edit"
+
+        container.appendChild(commentDiv)
+        container.appendChild(a) 
+    }
+
+}
+
+async function fetchComment(token, url) {
+    const fetchOptions = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
     };
 
     const response = await fetch(url, fetchOptions);

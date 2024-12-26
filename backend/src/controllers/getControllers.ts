@@ -33,9 +33,19 @@ const get = {
         return;
     },
 
-    comments: (req: Request, res: Response) => {
-        return;
-    },
+    comments: [ asyncHandler( async (req: Request, res: Response) => {
+
+        const { postId } = req.params
+
+        const comments = await prisma.comment.findMany({
+            where: {
+                postId: +postId
+            }
+        })
+
+        res.json(comments)
+
+    })],
 };
 
 export default get;

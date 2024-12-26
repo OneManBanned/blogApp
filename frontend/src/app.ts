@@ -23,6 +23,9 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/:postId", (req: Request, res: Response) => {
     res.render('post.html');
 })
+app.get("/comment/:commentId", (req: Request, res: Response) => {
+    res.render('comment.html');
+})
 
 
 app.listen(PORT, () => console.log(`listening on http://localhost:${PORT}`))
