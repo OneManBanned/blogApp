@@ -36,7 +36,7 @@ async function fetchPosts(token, url) {
 
 function display(data) {
     const { id, title, content } = data;
-    const container = document.querySelector("#post")
+    const container = document.querySelector("#post");
 
     const h1 = document.createElement("h1");
     h1.innerHTML = title;
@@ -53,7 +53,7 @@ function display(data) {
 
 function createCommentForm(id) {
     const commentForm = document.createElement("form");
-    commentForm.addEventListener("submit", handleFormSubmit);
+    commentForm.addEventListener("submit", (e) => handleFormSubmit(e, 'POST'));
 
     const textArea = document.createElement("textarea");
     textArea.name = "comment";
@@ -70,7 +70,7 @@ function createCommentForm(id) {
     return commentForm;
 }
 
-async function handleFormSubmit(event) {
+async function handleFormSubmit(event, method) {
     event.preventDefault();
     const inputs = document.querySelector("textarea");
 
@@ -79,7 +79,7 @@ async function handleFormSubmit(event) {
 
     try {
         const formData = new FormData(form);
-        const responseData = await sendFormDataAsJson({ url, formData });
+        const responseData = await sendFormDataAsJson({ url, formData, method });
 
         if (responseData.success) {
             location.href = `http://localhost:5000${location.pathname}`;
@@ -101,12 +101,13 @@ function displayServerErrors(errors, inputs) {
     }
 }
 
-async function sendFormDataAsJson({ url, formData }) {
+async function sendFormDataAsJson({ url, formData, method}) {
     const plainFormData = Object.fromEntries(formData.entries());
     const formDataJsonString = JSON.stringify(plainFormData);
 
+    console.log(url)
     const fetchOptions = {
-        method: "POST",
+        method: method,
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -137,24 +138,34 @@ async function displayComment() {
 }
 
 function displayComments(data) {
-    const { ...comments } = data
-    const container = document.querySelector("#comments")
+    const { comments, userId: id } = data;
+    const container = document.querySelector("#comments");
 
-    for (let i in comments) {
-        console.log(comments[i])
-        const commentDiv = document.createElement("div")
-        const p = document.createElement("p")
-        p.innerHTML = comments[i].content
-        commentDiv.appendChild(p)
+    for (let i = 0; i < comments.length; i++) {
+        const commentDiv = document.createElement("div");
+        commentDiv.id = "commentDiv";
+        const p = document.createElement("p");
+        p.innerHTML = comments[i].content;
+        commentDiv.appendChild(p);
 
-        const a = document.createElement("a")
-        a.href = `http://localhost:5000/comment/${comments[i].id}`
-        a.innerHTML = "Edit"
+        if (comments[i].authorId === id) {
+            const delForm = document.createElement("form")
+            const delButton = document.createElement("button");
+            delForm.action = `http://localhost:3000/post/comment/${comments[i].id}`
+            delForm.addEventListener("submit", (e) => handleFormSubmit(e, 'DELETE'))
+            delForm.appendChild(delButton)
+            delButton.innerHTML = "delete"
 
-        container.appendChild(commentDiv)
-        container.appendChild(a) 
+            const a = document.createElement("a");
+            a.href = `http://localhost:5000/comment/${comments[i].id}`;
+            a.innerHTML = "Edit";
+
+            commentDiv.appendChild(a);
+            commentDiv.appendChild(delForm);
+        }
+
+        container.appendChild(commentDiv);
     }
-
 }
 
 async function fetchComment(token, url) {
