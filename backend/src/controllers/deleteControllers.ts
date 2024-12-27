@@ -18,9 +18,17 @@ const del = {
 
     }),
 
-    comment: (req: Request, res: Response) => {
+    comment: asyncHandler( async (req: Request, res: Response) => {
+        const { commentId } = req.params
+        
+        await prisma.comment.delete({
+            where: {
+                id: +commentId
+            }
+        })
 
-    },
+        res.json({success: true})
+    }),
 }
 
 export default del;

@@ -30,12 +30,14 @@ const get = {
     }),
 
     comment: (req: Request, res: Response) => {
+        console.log("HIT COMMENT GET", " ", req.params)
         return;
     },
 
     comments: [ asyncHandler( async (req: Request, res: Response) => {
 
         const { postId } = req.params
+        const { id } = req.user as currentUser
 
         const comments = await prisma.comment.findMany({
             where: {
@@ -43,7 +45,7 @@ const get = {
             }
         })
 
-        res.json(comments)
+        res.json({comments: comments, userId: id})
 
     })],
 };

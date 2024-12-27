@@ -13,8 +13,9 @@ router.delete("/:postId", isAdmin, controller.del.post);
 
 router.get("/:postId/comments", controller.get.comments);
 
+router.get("/comment/:commentId", controller.get.comment)
 router.post("/:postId/comment", controller.post.comment);
-router.put("/:postId/comment/:commentId", controller.put.comment);
-router.delete("/:postId/comment/:commentId", controller.del.comment);
+router.put("/comment/:commentId", controller.put.comment);
+router.delete("/comment/:commentId", controller.del.comment);
 
 export default router;
