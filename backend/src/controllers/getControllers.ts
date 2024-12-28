@@ -13,41 +13,49 @@ const get = {
             },
         });
 
-        res.json(post)
+        res.json(post);
     }),
 
     posts: asyncHandler(async (req: Request, res: Response) => {
-
         const { author } = req.user as currentUser;
-        let posts 
+        let posts;
 
-        author 
-            ? posts = await prisma.post.findMany()
-            : posts = await prisma.post.findMany({where: { published: true }})
+        author
+            ? (posts = await prisma.post.findMany())
+            : (posts = await prisma.post.findMany({ where: { published: true } }));
 
         res.json({ posts: posts });
         return;
     }),
 
-    comment: (req: Request, res: Response) => {
-        console.log("HIT COMMENT GET", " ", req.params)
-        return;
-    },
+    comment: asyncHandler( async (req: Request, res: Response) => {
+        const { commentId } = req.params;
 
-    comments: [ asyncHandler( async (req: Request, res: Response) => {
+        const comment = await prisma.comment.findUnique({
+            select: {
+                content: true
+            },
+        where: {
+            id: +commentId
+        }})
 
-        const { postId } = req.params
-        const { id } = req.user as currentUser
+        res.json(comment)
+    }),
 
-        const comments = await prisma.comment.findMany({
-            where: {
-                postId: +postId
-            }
-        })
+    comments: [
+        asyncHandler(async (req: Request, res: Response) => {
+            const { postId } = req.params;
+            const { id } = req.user as currentUser;
 
-        res.json({comments: comments, userId: id})
+            const comments = await prisma.comment.findMany({
+                where: {
+                    postId: +postId,
+                },
+            });
 
-    })],
+            res.json({ comments: comments, userId: id });
+        }),
+    ],
 };
 
 export default get;
