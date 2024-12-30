@@ -45,7 +45,23 @@ const put = {
         }),
     ],
 
-    comment: (req: Request, res: Response) => { },
+    comment: asyncHandler( async (req: Request, res: Response) => { 
+
+        const { commentId } = req.params
+        const { comment } = req.body
+
+        await prisma.comment.update({
+            where: {
+                id: +commentId
+            },
+            data: {
+                content: comment
+            }
+        })
+
+        res.json({success: true})
+
+    }),
 };
 
 export default put;

@@ -40,6 +40,7 @@ function display(data) {
 
     textarea.innerHTML = content;
 }
+console.log(document.referrer)
 
 async function handleFormSubmit(event) {
     event.preventDefault();
@@ -52,7 +53,7 @@ async function handleFormSubmit(event) {
         const responseData = await postFormDataAsJson({ url, formData, token });
 
         if (responseData.success) {
-            location.href = `http://localhost:5000${form.attributes[1].value}`;
+            location.href = document.referrer;
         } else {
             displayServerErrors(responseData, inputs);
         }
